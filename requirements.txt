@@ -1,0 +1,4 @@
+pandas
+ipython
+ipykernel
+scikit-image

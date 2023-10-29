@@ -1,0 +1,77 @@
+BASE_TASK_CONFIG_PATH: configs/tasks/objectnav_hm3d.yaml
+CHECKPOINT_FOLDER: data/DEBUG
+CMD_TRAILING_OPTS:
+- TASK_CONFIG.ENVIRONMENT.ITERATOR_OPTIONS.MAX_SCENE_REPEAT_STEPS
+- '50000'
+ENV_NAME: SimpleRLEnv
+EVAL:
+  SPLIT: val
+  USE_CKPT_CONFIG: false
+EVAL_CKPT_PATH_DIR: ./models/XGX.pth
+FORCE_TORCH_SINGLE_THREADED: true
+IGNORE_EXPLORE_STOP: true
+LAST_MILE_NAVIGATION: true
+LMN:
+  FLIP_PHI: true
+  FRACTION_THRESHOLD: 0.1
+  INDEX: true
+  INDEX_FRAC: 0.01
+  MAX_DISTANCE: 2.5
+  PHI: 50
+  PREDICT_SEMANTICS: false
+  PREDICT_SEMANTICS_MASKRCNN: false
+  PREDICT_SEMANTICS_REDNET: true
+  REDNET_THRESHOLD: 0.8
+  RESTART_LOOP_POSE: true
+  SHAVE_DISTANCE: 0.5
+  SKIP_CHAIR: false
+  SKIP_STOP_EXPLORE: false
+  STOP_DISTANCE: 0.7
+  STOP_MIN: 0.1
+  THRESHOLD_CUTOFF: 0.9
+LMN_LOSS_IGNORE: false
+LOG_INTERVAL: 10
+NUM_CHECKPOINTS: 10
+NUM_ENVIRONMENTS: 1
+NUM_UPDATES: 30000
+PRETRAIN_TRAINING: ''
+PRETRAIN_TRAINING_CONFIG: ''
+RL:
+  DDPPO:
+    distrib_backend: GLOO
+    pretrained: true
+    pretrained_encoder: false
+    pretrained_weights: ./models/XGX.pth
+    reset_critic: false
+    sync_frac: 0.6
+    train_encoder: true
+  POLICY:
+    name: ObjectNavILMAEPolicy
+  PPO:
+    clip_param: 0.2
+    entropy_coef: 0.0001
+    eps: 1e-5
+    gamma: 0.99
+    hidden_size: 512
+    lr: 1.5e-05
+    max_grad_norm: 0.2
+    num_steps: 64
+    ppo_epoch: 4
+    reward_window_size: 50
+    tau: 0.95
+    use_gae: true
+    use_linear_clip_decay: false
+    use_normalized_advantage: false
+    value_loss_coef: 0.5
+  SLACK_REWARD: -1e-3
+  SUCCESS_REWARD: 2.5
+SENSORS:
+- RGB_SENSOR
+- DEPTH_SENSOR
+SIMULATOR_GPU_ID: 0
+TENSORBOARD_DIR: tb/DEBUG/
+TEST_EPISODE_COUNT: -1
+TORCH_GPU_ID: 0
+TRAINER_NAME: pirlnav-ppo
+VIDEO_DIR: video_dir/
+VIDEO_OPTION: []
