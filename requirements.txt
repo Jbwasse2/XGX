@@ -2,3 +2,4 @@ pandas
 ipython
 ipykernel
 scikit-image
+open3d==0.8.0.0
